@@ -14,7 +14,7 @@ Arduboy2 arduboy;
 byte x = 6;
 byte y = 9;
 bool STATE = false;
-bool STATE_2 = true;
+byte STATE_2 = 0;
 
 void setup() {
   arduboy.begin();
@@ -29,19 +29,39 @@ void loop() {
   arduboy.setCursor(x,y);
 
   if (arduboy.pressed(A_BUTTON)) {
-    STATE = true;
-  } else if (arduboy.pressed(B_BUTTON)) {
     STATE = false;
-    STATE_2 = !STATE_2;
+  } else if (arduboy.pressed(B_BUTTON)) {
+    STATE = true;
   }
-  
+
+  if (arduboy.pressed(UP_BUTTON)) {
+    STATE_2 = 0;
+  } else if (arduboy.pressed(LEFT_BUTTON)) {
+    STATE_2 = 1;
+  } else if (arduboy.pressed(RIGHT_BUTTON)) {
+    STATE_2 = 2;
+  } else if (arduboy.pressed(DOWN_BUTTON)) {
+    STATE_2 = 3;
+  }
+
   if (STATE) {
     arduboy.print(F("Do Not Disturb"));
     arduboy.setCursor(x,y+y);
-    if (STATE_2) {
-      arduboy.print(F("In Call/Conference"));
-    } else {
-      arduboy.print(F("Test Taking"));
+    switch (STATE_2) {
+      case 0:
+        arduboy.print(F("In Class"));
+        break;
+      case 1:
+        arduboy.print(F("In Call/Conference"));
+        break;
+      case 2:
+        arduboy.print(F("Test Taking"));
+        break;
+      case 3:
+        arduboy.print(F("Busy"));
+        break;
+      default:
+        arduboy.print(F("In Call/Conference"));
     }
   } else {
     arduboy.print(F("Open"));
