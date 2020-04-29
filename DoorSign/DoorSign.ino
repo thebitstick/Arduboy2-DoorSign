@@ -27,8 +27,10 @@ void loop() {
 
   arduboy.setCursor(x,y);
 
-  if (arduboy.pressed(A_BUTTON) || arduboy.pressed(B_BUTTON)) {
-    STATE = !STATE;
+  if (arduboy.pressed(A_BUTTON)) {
+    STATE = true;
+  } else if (arduboy.pressed(B_BUTTON)) {
+    STATE = false;
   }
   
   if (STATE) {
